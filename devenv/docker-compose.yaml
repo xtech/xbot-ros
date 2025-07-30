@@ -1,0 +1,32 @@
+name: xbot
+services:
+  ros2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - MY_UID=${MY_UID:-1000}
+        - MY_GID=${MY_GID:-1000}
+        - MY_USER=${MY_USER:-dev}
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}
+    volumes:
+      # mounts x11, so that we can use GUI apps
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      # mount the workspace
+      - ../:/workspace:rw
+      # Allow us to have persistant files in the .home (e.g. zsh history)
+      - ./.home:/home/${MY_USER}/.persistent
+    user: "${MY_UID:-1000}:${MY_GID:-1000}"
+    network_mode: "host"
+    # Instantly kill the container when stopped
+    stop_grace_period: 0s
+  client:
+    image: ghcr.io/xtech/etherbridge:main
+    command: client --peer ${PEER:-xbot} --bridge ${BRIDGE_IP:-172.16.78.2}
+    network_mode: host
+    privileged: true
+    profiles:
+      - etherbridge
