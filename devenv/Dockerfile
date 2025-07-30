@@ -25,23 +25,20 @@ RUN groupadd -g ${MY_GID} -o ${MY_USER} && \
 RUN rosdep update --rosdistro $ROS_DISTRO
 
 # Create a new image layer based on the base image for storing dependencies
-#FROM base AS dependencies
+FROM base AS dependencies
 
 # Generate a sorted list of apt-get install commands corresponding to the dependencies.
 # No actual installation is performed in this stage.
-#RUN --mount=type=bind,source=./,target=/tmp/open_mower_ros \
-#    cd /tmp/open_mower_ros && \
-#    rosdep install --from-paths src --ignore-src --simulate | \
-#    sed --expression '1d' | sort | tr -d '\n' | sed --expression 's/  apt-get install//g' > /apt-install_list
+RUN --mount=type=bind,source=../,target=/workspace \
+    cd /workspace && \
+    rosdep install --from-paths src --ignore-src --simulate | \
+    sed --expression '1d' | sort | tr -d '\n' | sed --expression 's/  apt-get install//g' > /apt-install_list
 
 # Create another image layer for the development environment
 FROM base AS devenv
 
 # Copy the list of packages into the new layer
-#COPY --link --from=dependencies /apt-install_list /apt-install_list
-
-# TODO: remove and add actual packet list
-RUN touch /apt-install_list
+COPY --link --from=dependencies /apt-install_list /apt-install_list
 
 # Update package lists for upgrades or new package installation
 RUN apt-get update && \
@@ -60,7 +57,7 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
     ln -sf /home/${MY_USER}/.persistent/.zsh_history /home/${MY_USER}/.zsh_history
 
 # Fix the autocomplete
-RUN activate-global-python-argcomplete --user && echo "eval \"\$(register-python-argcomplete ros2)\"\\neval \"\$(register-python-argcomplete colcon)\"" >> ~/.zshrc
+# RUN activate-global-python-argcomplete --user && echo "eval \"\$(register-python-argcomplete ros2)\"\\neval \"\$(register-python-argcomplete colcon)\"" >> ~/.zshrc
 
 WORKDIR /workspace
 
