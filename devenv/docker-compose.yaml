@@ -25,6 +25,8 @@ services:
     # Instantly kill the container when stopped
     stop_grace_period: 0s
     entrypoint: [ ]  # Disable entrypoint, we don't need it just to sleep, it will be executed on attach.sh
+    pid: "host"
+    ipc: "host"
   client:
     image: ghcr.io/xtech/etherbridge:main
     command: client --peer ${PEER:-xbot} --bridge ${BRIDGE_IP:-172.16.78.2}
