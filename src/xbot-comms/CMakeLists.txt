@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.8)
 project(xbot-ros)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+set(XBOT_BUILD_LIB_SERVICE OFF)
 add_subdirectory(ext/xbot_framework)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -29,14 +34,22 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-add_executable(testnode src/testnode.cpp)
-target_link_libraries(testnode PUBLIC rclcpp::rclcpp ${std_msgs_TARGETS} ${sensor_msgs_TARGETS})
-target_link_libraries(testnode PRIVATE xbot-service-interface)
+add_executable(xbot-comms src/xbot-comms.cpp
+        src/xbot_comms_node.cpp
+        src/xbot_comms_node.h
+        src/diff_drive_service_interface.cpp
+        src/imu_service_interface.cpp
+)
+target_link_libraries(xbot-comms PUBLIC rclcpp::rclcpp ${std_msgs_TARGETS} ${sensor_msgs_TARGETS})
+target_link_libraries(xbot-comms PRIVATE xbot-service-interface)
+target_include_directories(xbot-comms PRIVATE ext/service-definitions)
 
-target_add_service_interface(testnode ImuServiceInterface ${CMAKE_CURRENT_SOURCE_DIR}/ext/service-definitions/imu_service.json)
+target_add_service_interface(xbot-comms ImuServiceInterface ${CMAKE_CURRENT_SOURCE_DIR}/ext/service-definitions/imu_service.json)
+target_add_service_interface(xbot-comms DiffDriveServiceInterface ${CMAKE_CURRENT_SOURCE_DIR}/ext/service-definitions/diff_drive_service.json)
+target_add_service_interface(xbot-comms PowerServiceInterface ${CMAKE_CURRENT_SOURCE_DIR}/ext/service-definitions/power_service.json)
 
 install(TARGETS
-        testnode
+        xbot-comms
         DESTINATION lib/${PROJECT_NAME})
 
 ament_package()

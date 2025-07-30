@@ -1,0 +1,36 @@
+{
+  "registers": [],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Infrared IDs",
+      "type": "uint8_t[3]"
+    },
+    {
+      "id": 1,
+      "name": "Distances",
+      "type": "double[3]"
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "LED Animation",
+      "type": "LEDAnimation"
+    }
+  ],
+  "enums": [
+    {
+      "id": "LEDAnimation",
+      "base_type": "uint8_t",
+      "values": {
+        "OFF": 0,
+        "ON": 1,
+        "RIGHT": 2,
+        "LEFT": 3
+      }
+    }
+  ],
+  "type": "BumperService",
+  "version": 1
+}

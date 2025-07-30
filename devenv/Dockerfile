@@ -59,6 +59,9 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
     mkdir -p /home/${MY_USER}/.persistent && \
     ln -sf /home/${MY_USER}/.persistent/.zsh_history /home/${MY_USER}/.zsh_history
 
+# Fix the autocomplete
+RUN activate-global-python-argcomplete --user && echo "eval \"\$(register-python-argcomplete ros2)\"\\neval \"\$(register-python-argcomplete colcon)\"" >> ~/.zshrc
+
 WORKDIR /workspace
 
 ENTRYPOINT ["/entrypoint.sh"]

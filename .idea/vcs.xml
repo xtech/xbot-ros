@@ -4,11 +4,8 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/build/xbot-ros/_deps/crow-src" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/build/xbot-ros/_deps/spdlog-src" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/xbot-ros/cmake-build-debug-dockerros/_deps/crow-src" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/xbot-ros/cmake-build-debug-dockerros/_deps/spdlog-src" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/xbot-ros/ext/service-definitions" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/xbot-ros/ext/xbot_framework" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/xbot-ros/ext/xbot_framework/ext/cpputest" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/xbot-ros/ext/xbot_framework/ext/ulog" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/xbot-comms/ext/xbot_framework" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/xbot-comms/ext/xbot_framework/ext/cpputest" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/xbot-comms/ext/xbot_framework/ext/ulog" vcs="Git" />
   </component>
 </project>
