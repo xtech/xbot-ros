@@ -4,6 +4,3 @@
 [submodule "src/xbot-ros/ext/definitions-open-mower"]
 	path = src/xbot-ros/ext/definitions-open-mower
 	url = https://github.com/xtech/definitions-open-mower
-[submodule "src/xbot-ros/ext/service-definitions"]
-	path = src/xbot-ros/ext/service-definitions
-	url = https://github.com/xtech/definitions-open-mower
