@@ -3,7 +3,7 @@
   <component name="CMakePythonSetting">
     <option name="pythonIntegrationState" value="YES" />
   </component>
-  <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$/src/xbot-comms">
+  <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$/src/xbot_comms">
     <contentRoot DIR="$PROJECT_DIR$" />
   </component>
   <component name="WestSettings">{}</component>
