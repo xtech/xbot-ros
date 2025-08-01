@@ -42,7 +42,7 @@ COPY --link --from=dependencies /apt-install_list /apt-install_list
 
 # Update package lists for upgrades or new package installation
 RUN apt-get update && \
-    apt-get install --no-install-recommends --yes $(cat /apt-install_list) libasio-dev python3 python3-pip python3-venv && \
+    apt-get install --no-install-recommends --yes $(cat /apt-install_list) libasio-dev python3 python3-pip python3-venv ros-jazzy-teleop-twist-joy && \
     rm -rf /var/lib/apt/lists/*
 
 COPY ./entrypoint.sh /entrypoint.sh
@@ -57,7 +57,7 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
     ln -sf /home/${MY_USER}/.persistent/.zsh_history /home/${MY_USER}/.zsh_history
 
 # Fix the autocomplete
-# RUN activate-global-python-argcomplete --user && echo "eval \"\$(register-python-argcomplete ros2)\"\\neval \"\$(register-python-argcomplete colcon)\"" >> ~/.zshrc
+RUN activate-global-python-argcomplete --user && echo "eval \"\$(register-python-argcomplete ros2)\"\\neval \"\$(register-python-argcomplete colcon)\"" >> ~/.zshrc
 
 WORKDIR /workspace
 
