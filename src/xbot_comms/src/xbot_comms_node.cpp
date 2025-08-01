@@ -15,6 +15,8 @@ XbotCommsNode::XbotCommsNode() : Node("xbot_comms") {
 
     imu_service_interface_ = std::make_unique<ImuServiceInterface>(*this, ctx_);
     diff_drive_service_interface_ = std::make_unique<DiffDriveServiceInterface>(*this, ctx_);
+    imu_service_interface_->Start();
+    diff_drive_service_interface_->Start();
 }
 
 void XbotCommsNode::Shutdown() {
