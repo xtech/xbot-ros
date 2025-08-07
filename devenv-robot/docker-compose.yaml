@@ -1,0 +1,27 @@
+name: xbot
+services:
+  ros2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - MY_UID=${MY_UID:-1000}
+        - MY_GID=${MY_GID:-1000}
+        - MY_USER=${MY_USER:-dev}
+    environment:
+      - COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}
+      - BIND_IP=${BRIDGE_IP:-172.16.78.2}
+    volumes:
+      - /dev:/dev
+      # mount the workspace
+      - ../:/workspace:rw
+      # Allow us to have persistant files in the .home (e.g. zsh history)
+      - ./.home:/home/${MY_USER:-dev}/.persistent
+    user: "${MY_UID:-1000}:${MY_GID:-1000}"
+    network_mode: "host"
+    # Instantly kill the container when stopped
+    stop_grace_period: 0s
+    entrypoint: [ ]  # Disable entrypoint, we don't need it just to sleep, it will be executed on attach.sh
+    pid: "host"
+    ipc: "host"
+    privileged: true
