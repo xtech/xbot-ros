@@ -14,6 +14,8 @@ void ImuServiceInterface::OnAxesChanged(const double* new_value, uint32_t length
     return;
   }
   sensor_msgs::msg::Imu message{};
+  message.header.stamp = rclcpp::Clock().now();
+  message.header.frame_id = "imu";
   message.linear_acceleration.x = new_value[0];
   message.linear_acceleration.y = new_value[1];
   message.linear_acceleration.z = new_value[2];
