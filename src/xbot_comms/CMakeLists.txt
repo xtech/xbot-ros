@@ -21,6 +21,8 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(nav_msgs REQUIRED)
+find_package(tf2_ros REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -40,7 +42,7 @@ add_executable(xbot_comms src/xbot-comms.cpp
         src/diff_drive_service_interface.cpp
         src/imu_service_interface.cpp
 )
-target_link_libraries(xbot_comms PUBLIC rclcpp::rclcpp ${std_msgs_TARGETS} ${sensor_msgs_TARGETS})
+target_link_libraries(xbot_comms PUBLIC rclcpp::rclcpp ${std_msgs_TARGETS} ${sensor_msgs_TARGETS} ${tf2_ros_TARGETS} ${nav_msgs_TARGETS})
 target_link_libraries(xbot_comms PRIVATE xbot-service-interface)
 target_include_directories(xbot_comms PRIVATE ext/service-definitions)
 

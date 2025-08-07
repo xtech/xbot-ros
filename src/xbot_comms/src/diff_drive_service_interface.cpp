@@ -3,6 +3,8 @@
 //
 
 #include "diff_drive_service_interface.hpp"
+#include <tf2/utils.hpp>
+
 
 void DiffDriveServiceInterface::OnActualTwistChanged(const double *new_value, uint32_t length) {
     if (length != 6) {
@@ -17,6 +19,85 @@ void DiffDriveServiceInterface::OnActualTwistChanged(const double *new_value, ui
     message.angular.y = new_value[4];
     message.angular.z = new_value[5];
     twist_publisher_->publish(message);
+
+    // Get current time
+    auto current_time = node_.get_clock()->now();
+
+    // Calculate time difference (dt) since last update
+    double dt = 0.0;
+    if (t.header.stamp.sec > 0) {
+        dt = (current_time - t.header.stamp).seconds();
+    }
+    t.header.stamp = current_time;
+    odometry_.header.stamp = current_time;
+
+    // Extract velocities from the twist message
+    double linear_x = new_value[0];   // Linear velocity in x direction (m/s)
+    double angular_z = new_value[5];  // Angular velocity around z axis (rad/s)
+
+    // Perform odometry integration if we have a valid time step
+    if (dt > 0.0 && dt < 1.0) {  // Sanity check: dt should be reasonable
+        // For differential drive robots, we typically assume no lateral motion (linear_y = 0)
+
+        // Calculate change in position and orientation
+        double delta_x, delta_y, delta_theta;
+
+        if (std::abs(angular_z) < 1e-6) {
+            // Pure translation (no rotation)
+            delta_x = linear_x * dt;
+            delta_y = 0.0;
+            delta_theta = 0.0;
+        } else {
+            // Motion with rotation - use instantaneous center of rotation
+            double R = linear_x / angular_z;  // Radius of curvature
+            delta_theta = angular_z * dt;
+
+            // Calculate position change in robot frame
+            delta_x = R * std::sin(delta_theta);
+            delta_y = R * (1.0 - std::cos(delta_theta));
+        }
+
+
+        // Transform to global frame
+        double cos_theta = std::cos(robot_yaw_);
+        double sin_theta = std::sin(robot_yaw_);
+
+        // Update global position
+        t.transform.translation.x += cos_theta * delta_x - sin_theta * delta_y;
+        t.transform.translation.y += sin_theta * delta_x + cos_theta * delta_y;
+        robot_yaw_ += delta_theta;
+
+        // Normalize yaw angle to [-pi, pi]
+        while (robot_yaw_ > M_PI) robot_yaw_ -= 2.0 * M_PI;
+        while (robot_yaw_ < -M_PI) robot_yaw_ += 2.0 * M_PI;
+
+        tf2::Quaternion q;
+        q.setRPY(0, 0, robot_yaw_);
+        t.transform.rotation.x = q.x();
+        t.transform.rotation.y = q.y();
+        t.transform.rotation.z = q.z();
+        t.transform.rotation.w = q.w();
+        tf_broadcaster_->sendTransform(t);
+
+        // Also publish odometry message
+        odometry_.pose.pose.position.x = t.transform.translation.x;
+        odometry_.pose.pose.position.y = t.transform.translation.y;
+        odometry_.pose.pose.position.z = 0.0;
+        odometry_.pose.pose.orientation = t.transform.rotation;
+
+        // Set twist (velocities in the child frame - base_link)
+        odometry_.twist.twist.linear.x = linear_x;
+        odometry_.twist.twist.linear.y = 0.0;
+        odometry_.twist.twist.linear.z = 0.0;
+        odometry_.twist.twist.angular.x = 0.0;
+        odometry_.twist.twist.angular.y = 0.0;
+        odometry_.twist.twist.angular.z = angular_z;
+
+        odom_publisher_->publish(odometry_);
+    } else {
+        RCLCPP_WARN(node_.get_logger(), "Invalid time step (%f) when updating odometry", dt);
+    }
+
 }
 
 void DiffDriveServiceInterface::OnWheelTicksChanged(const uint32_t *new_value, uint32_t length) {
