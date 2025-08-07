@@ -46,6 +46,16 @@
       "id": 7,
       "name": "Wheel Ticks",
       "type": "uint32_t[2]"
+    },
+    {
+      "id": 8,
+      "name": "Left PID Debug",
+      "type": "float[3]"
+    },
+    {
+      "id": 9,
+      "name": "Right PID Debug",
+      "type": "float[3]"
     }
   ],
   "registers": [],

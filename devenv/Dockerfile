@@ -40,9 +40,11 @@ FROM base AS devenv
 # Copy the list of packages into the new layer
 COPY --link --from=dependencies /apt-install_list /apt-install_list
 
+COPY --link ./additional-apt-packages.txt /
+
 # Update package lists for upgrades or new package installation
 RUN apt-get update && \
-    apt-get install --no-install-recommends --yes $(cat /apt-install_list) libasio-dev python3 python3-pip python3-venv ros-jazzy-teleop-twist-joy && \
+    apt-get install --no-install-recommends --yes $(cat /apt-install_list) $(cat /additional-apt-packages.txt) libasio-dev python3 python3-pip python3-venv && \
     rm -rf /var/lib/apt/lists/*
 
 COPY ./entrypoint.sh /entrypoint.sh

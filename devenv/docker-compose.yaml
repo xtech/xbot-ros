@@ -34,5 +34,6 @@ services:
     command: client --peer ${PEER:-xbot} --bridge ${BRIDGE_IP:-172.16.78.2}
     network_mode: host
     privileged: true
+    restart: unless-stopped
     profiles:
       - etherbridge

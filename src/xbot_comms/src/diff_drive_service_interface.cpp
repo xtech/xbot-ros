@@ -19,6 +19,19 @@ void DiffDriveServiceInterface::OnActualTwistChanged(const double *new_value, ui
     twist_publisher_->publish(message);
 }
 
+void DiffDriveServiceInterface::OnWheelTicksChanged(const uint32_t *new_value, uint32_t length) {
+    if (length != 2) {
+        RCLCPP_ERROR(node_.get_logger(), "Invalid length of wheel ticks: %d", length);
+        return;
+    }
+    std_msgs::msg::UInt32 left_ticks{};
+    std_msgs::msg::UInt32 right_ticks{};
+    left_ticks.data = new_value[0];
+    right_ticks.data = new_value[1];
+    left_wheel_ticks_publisher_->publish(left_ticks);
+    right_wheel_ticks_publisher_->publish(right_ticks);
+}
+
 void DiffDriveServiceInterface::CmdVelReceived(const geometry_msgs::msg::Twist::SharedPtr msg) {
     double message[6]{};
     message[0] = msg->linear.x;
@@ -28,4 +41,32 @@ void DiffDriveServiceInterface::CmdVelReceived(const geometry_msgs::msg::Twist::
     message[4] = msg->angular.y;
     message[5] = msg->angular.z;
     SendControlTwist(message, sizeof(message)/sizeof(double));
+}
+
+void DiffDriveServiceInterface::OnLeftPIDDebugChanged(const float *new_value, uint32_t length) {
+    if (length != 3) {
+        RCLCPP_ERROR(node_.get_logger(), "Invalid length of left PID debug: %d", length);
+        return;
+    }
+    std_msgs::msg::Float32 message{};
+    message.data = new_value[0];
+    left_pid_debug_input_publisher_->publish(message);
+    message.data = new_value[1];
+    left_pid_debug_output_publisher_->publish(message);
+    message.data = new_value[2];
+    left_pid_debug_setpoint_publisher_->publish(message);
+}
+
+void DiffDriveServiceInterface::OnRightPIDDebugChanged(const float *new_value, uint32_t length) {
+    if (length != 3) {
+        RCLCPP_ERROR(node_.get_logger(), "Invalid length of right PID debug: %d", length);
+        return;
+    }
+    std_msgs::msg::Float32 message{};
+    message.data = new_value[0];
+    right_pid_debug_input_publisher_->publish(message);
+    message.data = new_value[1];
+    right_pid_debug_output_publisher_->publish(message);
+    message.data = new_value[2];
+    right_pid_debug_setpoint_publisher_->publish(message);
 }

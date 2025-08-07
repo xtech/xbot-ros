@@ -14,11 +14,11 @@ void ImuServiceInterface::OnAxesChanged(const double* new_value, uint32_t length
     return;
   }
   sensor_msgs::msg::Imu message{};
-  message.angular_velocity.x = new_value[0];
-  message.angular_velocity.y = new_value[1];
-  message.angular_velocity.z = new_value[2];
-  message.linear_acceleration.x = new_value[3];
-  message.linear_acceleration.y = new_value[4];
-  message.linear_acceleration.z = new_value[5];
+  message.linear_acceleration.x = new_value[0];
+  message.linear_acceleration.y = new_value[1];
+  message.linear_acceleration.z = new_value[2];
+  message.angular_velocity.x = new_value[3];
+  message.angular_velocity.y = new_value[4];
+  message.angular_velocity.z = new_value[5];
   publisher_->publish(message);
 }
