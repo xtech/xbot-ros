@@ -2,9 +2,11 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.substitutions import EnvironmentVariable, LaunchConfiguration
 from launch_ros.actions import Node
-from launch_ros.descriptions import PythonLaunchDescriptionSource
+from launch.substitutions import PathJoinSubstitution
+from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
+    launch_dir = PathJoinSubstitution([FindPackageShare('xbot_example'), 'launch'])
     return LaunchDescription([
         DeclareLaunchArgument(
             'bind_ip_arg',
@@ -13,19 +15,19 @@ def generate_launch_description():
         ),
         Node(
             package='xbot_comms',
-            namespace='xbot_comms',
             executable='xbot_comms',
             name='xbot_comms',
             parameters=[{'bind_ip': LaunchConfiguration('bind_ip_arg')}]
     ),
         IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                'urdf_launch.py'
+            PathJoinSubstitution(
+                [launch_dir, 'urdf_launch.py']
             )
         ),
         IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                'cartographer_launch.py'
+            PathJoinSubstitution(
+                [launch_dir, 'cartographer_launch.py']
             )
         )
     ])
+

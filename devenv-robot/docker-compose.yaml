@@ -10,7 +10,7 @@ services:
         - MY_USER=${MY_USER:-dev}
     environment:
       - COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}
-      - BIND_IP=${BRIDGE_IP:-172.16.78.2}
+      - BIND_IP=172.16.78.1
     volumes:
       - /dev:/dev
       # mount the workspace
