@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/xbot-ros.iml" filepath="$PROJECT_DIR$/.idea/xbot-ros.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/xbot_comms.iml" filepath="$PROJECT_DIR$/.idea/xbot_comms.iml" />
     </modules>
   </component>
 </project>

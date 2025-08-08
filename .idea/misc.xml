@@ -3,8 +3,9 @@
   <component name="CMakePythonSetting">
     <option name="pythonIntegrationState" value="YES" />
   </component>
-  <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$/src/xbot_comms">
+  <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$/src/xbot_utils">
     <contentRoot DIR="$PROJECT_DIR$" />
   </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Remote Python 3.12.3 Docker (xbot-ros2:latest)" project-jdk-type="Python SDK" />
   <component name="WestSettings">{}</component>
 </project>
