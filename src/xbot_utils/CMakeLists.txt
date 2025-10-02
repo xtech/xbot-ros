@@ -18,6 +18,7 @@ find_package(tf2_ros REQUIRED)
 find_package(tf2_sensor_msgs REQUIRED)
 find_package(pcl_conversions REQUIRED)
 find_package(pcl_ros REQUIRED)
+find_package(nav_msgs REQUIRED)
 
 # Include directories
 include_directories(include)
@@ -33,6 +34,7 @@ ament_target_dependencies(scan_to_pointcloud
   tf2_sensor_msgs
   pcl_conversions
   pcl_ros
+    nav_msgs
 )
 
 # Declare the scan_to_pointcloud_node executable

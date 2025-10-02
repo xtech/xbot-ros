@@ -4,8 +4,11 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/build/xbot_comms/_deps/crow-src" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/build/xbot_comms/_deps/spdlog-src" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/rplidar_ros" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/xbot_comms/cmake-build-debug-dockerros/_deps/crow-src" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/xbot_comms/cmake-build-debug-dockerros/_deps/spdlog-src" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/xbot_comms/cmake-build-debug/_deps/crow-src" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/xbot_comms/cmake-build-debug/_deps/spdlog-src" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/xbot_comms/ext/xbot_framework" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/xbot_comms/ext/xbot_framework/ext/cpputest" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/xbot_comms/ext/xbot_framework/ext/ulog" vcs="Git" />

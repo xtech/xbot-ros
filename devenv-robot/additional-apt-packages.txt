@@ -1,3 +1,2 @@
 ros-jazzy-teleop-twist-joy
-ros-jazzy-rplidar-ros
 ros-jazzy-cartographer-ros

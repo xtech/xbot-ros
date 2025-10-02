@@ -1,3 +1,6 @@
 [submodule "src/xbot_comms/ext/xbot_framework"]
 	path = src/xbot_comms/ext/xbot_framework
 	url = https://github.com/xtech/xbot_framework
+[submodule "src/rplidar_ros"]
+	path = src/rplidar_ros
+	url = git@github.com:xtech/rplidar_ros.git
