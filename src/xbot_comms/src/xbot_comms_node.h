@@ -13,17 +13,15 @@
 
 class XbotCommsNode final : public rclcpp::Node {
 public:
-    XbotCommsNode();
-    void Shutdown();
+  XbotCommsNode();
+  void Shutdown();
 
 private:
-    xbot::serviceif::Context ctx_;
-    std::string bind_ip_;
+  xbot::serviceif::Context ctx_;
+  std::string bind_ip_;
 
-    std::unique_ptr<ImuServiceInterface> imu_service_interface_;
-    std::unique_ptr<DiffDriveServiceInterface> diff_drive_service_interface_;
+  std::unique_ptr<ImuServiceInterface> imu_service_interface_;
+  std::unique_ptr<DiffDriveServiceInterface> diff_drive_service_interface_;
 };
 
-
-
-#endif //XBOTCOMMSNODE_H
+#endif // XBOTCOMMSNODE_H

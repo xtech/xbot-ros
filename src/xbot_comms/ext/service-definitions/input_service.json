@@ -20,7 +20,7 @@
       "type": "uint8_t[2]"
     }
   ],
-  "registers": [ ],
+  "registers": [],
   "enums": [
     {
       "id": "InputEventType",

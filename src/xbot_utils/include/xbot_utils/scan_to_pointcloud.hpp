@@ -1,26 +1,25 @@
 #ifndef XBOT_UTILS_SCAN_TO_POINTCLOUD_HPP
 #define XBOT_UTILS_SCAN_TO_POINTCLOUD_HPP
 
+#include <chrono>
+#include <deque>
+#include <mutex>
+#include <nav_msgs/msg/odometry.hpp>
+#include <pcl/point_cloud.h>
+#include <pcl/point_types.h>
+#include <pcl_conversions/pcl_conversions.h>
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/laser_scan.hpp>
 #include <sensor_msgs/msg/point_cloud2.hpp>
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
-#include <pcl/point_cloud.h>
-#include <pcl/point_types.h>
-#include <pcl_conversions/pcl_conversions.h>
-#include <deque>
-#include <mutex>
-#include <nav_msgs/msg/odometry.hpp>
-#include <chrono>
 
-namespace xbot_utils
-{
+namespace xbot_utils {
 
-class ScanToPointcloud : public rclcpp::Node
-{
+class ScanToPointcloud : public rclcpp::Node {
 public:
-  explicit ScanToPointcloud(const rclcpp::NodeOptions & options = rclcpp::NodeOptions());
+  explicit ScanToPointcloud(
+      const rclcpp::NodeOptions &options = rclcpp::NodeOptions());
   virtual ~ScanToPointcloud() = default;
 
 private:
@@ -50,9 +49,9 @@ private:
   void scanCallback(const sensor_msgs::msg::LaserScan::SharedPtr scan);
 
   // Transform laser scan to point cloud
-  bool transformScanToPointCloud(
-    const sensor_msgs::msg::LaserScan::SharedPtr & scan,
-    pcl::PointCloud<pcl::PointXYZ>::Ptr & cloud_out);
+  bool
+  transformScanToPointCloud(const sensor_msgs::msg::LaserScan::SharedPtr &scan,
+                            pcl::PointCloud<pcl::PointXYZ>::Ptr &cloud_out);
 
   // Publish the accumulated point cloud
   void publishPointCloud();
@@ -61,14 +60,14 @@ private:
   void odomCallback(const nav_msgs::msg::Odometry::SharedPtr odom);
 
   // Find closest odometry message to a given time
-  nav_msgs::msg::Odometry::SharedPtr getClosestOdom(const rclcpp::Time& stamp);
+  nav_msgs::msg::Odometry::SharedPtr getClosestOdom(const rclcpp::Time &stamp);
 
   // Deskew points using twist
-  void deskewPointCloud(const sensor_msgs::msg::LaserScan::SharedPtr& scan,
-                        const nav_msgs::msg::Odometry::SharedPtr& odom,
-                        pcl::PointCloud<pcl::PointXYZ>::Ptr& cloud_in_out);
+  void deskewPointCloud(const sensor_msgs::msg::LaserScan::SharedPtr &scan,
+                        const nav_msgs::msg::Odometry::SharedPtr &odom,
+                        pcl::PointCloud<pcl::PointXYZ>::Ptr &cloud_in_out);
 };
 
-}  // namespace xbot_utils
+} // namespace xbot_utils
 
-#endif  // XBOT_UTILS_SCAN_TO_POINTCLOUD_HPP
+#endif // XBOT_UTILS_SCAN_TO_POINTCLOUD_HPP

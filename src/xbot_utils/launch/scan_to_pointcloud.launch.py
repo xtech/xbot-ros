@@ -10,13 +10,13 @@ def generate_launch_description():
         default_value='odom',
         description='Target frame for the point cloud'
     )
-    
+
     max_cloud_size_arg = DeclareLaunchArgument(
         'max_cloud_size',
         default_value='10000',
         description='Maximum number of points in the point cloud'
     )
-    
+
     # Create node
     scan_to_pointcloud_node = Node(
         package='xbot_utils',
@@ -32,7 +32,7 @@ def generate_launch_description():
         ],
         output='screen'
     )
-    
+
     # Create launch description
     return LaunchDescription([
         target_frame_arg,
