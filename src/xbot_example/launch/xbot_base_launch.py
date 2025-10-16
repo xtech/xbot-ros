@@ -6,6 +6,7 @@ from launch.substitutions import PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
+    launch_dir = PathJoinSubstitution([FindPackageShare('xbot_example'), 'launch'])
     return LaunchDescription([
         DeclareLaunchArgument(
             'bind_ip_arg',

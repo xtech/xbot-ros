@@ -2,8 +2,8 @@ name: xbot
 services:
   ros2:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: devenv/Dockerfile
       args:
         - MY_UID=${MY_UID:-1000}
         - MY_GID=${MY_GID:-1000}
