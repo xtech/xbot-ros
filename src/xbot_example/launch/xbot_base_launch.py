@@ -17,6 +17,8 @@ def generate_launch_description():
             package='xbot_comms',
             executable='xbot_comms',
             name='xbot_comms',
+            output='screen',
+            emulate_tty=True,
             parameters=[{'bind_ip': LaunchConfiguration('bind_ip_arg')}]
     ),
         IncludeLaunchDescription(
