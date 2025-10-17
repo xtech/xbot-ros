@@ -20,35 +20,35 @@ public:
       : DiffDriveServiceInterfaceBase(xbot::service_ids::DIFF_DRIVE, ctx),
         node_(node) {
     twist_publisher_ = node.create_publisher<geometry_msgs::msg::Twist>(
-        "ll/measured_twist", 10);
-    left_wheel_ticks_publisher_ =
-        node.create_publisher<std_msgs::msg::UInt32>("ll/wheel_ticks_left", 10);
+        "ll/measured_twist", rclcpp::SensorDataQoS());
+    left_wheel_ticks_publisher_ = node.create_publisher<std_msgs::msg::UInt32>(
+        "ll/wheel_ticks_left", rclcpp::SensorDataQoS());
     right_wheel_ticks_publisher_ = node.create_publisher<std_msgs::msg::UInt32>(
-        "ll/wheel_ticks_right", 10);
+        "ll/wheel_ticks_right", rclcpp::SensorDataQoS());
     cmd_vel_subscription_ = node.create_subscription<geometry_msgs::msg::Twist>(
-        "cmd_vel", 10,
+        "cmd_vel", rclcpp::SensorDataQoS(),
         std::bind(&DiffDriveServiceInterface::CmdVelReceived, this,
                   std::placeholders::_1));
     left_pid_debug_input_publisher_ =
         node.create_publisher<std_msgs::msg::Float32>(
-            "ll/diff_drive/left_pid_debug_input", 10);
+            "ll/diff_drive/left_pid_debug_input", rclcpp::SensorDataQoS());
     left_pid_debug_output_publisher_ =
         node.create_publisher<std_msgs::msg::Float32>(
-            "ll/diff_drive/left_pid_debug_output", 10);
+            "ll/diff_drive/left_pid_debug_output", rclcpp::SensorDataQoS());
     left_pid_debug_setpoint_publisher_ =
         node.create_publisher<std_msgs::msg::Float32>(
-            "ll/diff_drive/left_pid_debug_setpoint", 10);
+            "ll/diff_drive/left_pid_debug_setpoint", rclcpp::SensorDataQoS());
     right_pid_debug_input_publisher_ =
         node.create_publisher<std_msgs::msg::Float32>(
-            "ll/diff_drive/right_pid_debug_input", 10);
+            "ll/diff_drive/right_pid_debug_input", rclcpp::SensorDataQoS());
     right_pid_debug_output_publisher_ =
         node.create_publisher<std_msgs::msg::Float32>(
-            "ll/diff_drive/right_pid_debug_output", 10);
+            "ll/diff_drive/right_pid_debug_output", rclcpp::SensorDataQoS());
     right_pid_debug_setpoint_publisher_ =
         node.create_publisher<std_msgs::msg::Float32>(
-            "ll/diff_drive/right_pid_debug_setpoint", 10);
-    odom_publisher_ =
-        node.create_publisher<nav_msgs::msg::Odometry>("odom", 10);
+            "ll/diff_drive/right_pid_debug_setpoint", rclcpp::SensorDataQoS());
+    odom_publisher_ = node.create_publisher<nav_msgs::msg::Odometry>(
+        "odom", rclcpp::SensorDataQoS());
 
     tf_broadcaster_ = std::make_unique<tf2_ros::TransformBroadcaster>(node_);
 

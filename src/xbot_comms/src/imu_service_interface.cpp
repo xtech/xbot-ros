@@ -8,7 +8,8 @@
 ImuServiceInterface::ImuServiceInterface(rclcpp::Node &node,
                                          xbot::serviceif::Context ctx)
     : ImuServiceInterfaceBase(xbot::service_ids::IMU, ctx) {
-  publisher_ = node.create_publisher<sensor_msgs::msg::Imu>("imu", 10);
+  publisher_ = node.create_publisher<sensor_msgs::msg::Imu>(
+      "imu", rclcpp::SensorDataQoS());
 }
 
 void ImuServiceInterface::OnAxesChanged(const double *new_value,
