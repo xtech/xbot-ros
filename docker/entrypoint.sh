@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-set -euo pipefail
+set -e
 # Comma-separated list, e.g. WAIT_IFACES="eth0,wlan0"
 IFACES=()
 if [[ -n "${WAIT_IFACES-}" ]]; then
