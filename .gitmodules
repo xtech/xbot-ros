@@ -3,4 +3,4 @@
 	url = https://github.com/xtech/xbot_framework
 [submodule "src/rplidar_ros"]
 	path = src/rplidar_ros
-	url = git@github.com:xtech/rplidar_ros.git
+	url = https://github.com/xtech/rplidar_ros
