@@ -34,7 +34,7 @@ RUN apt-get update && \
 
 COPY . /workspace
 WORKDIR /workspace
-RUN bash -c "source /opt/ros/jazzy/setup.bash && colcon build"
+RUN bash -c "source /opt/ros/jazzy/setup.bash && colcon build --cmake-args -DFASTDDS_STATISTICS=ON"
 
 
 FROM base AS runtime
