@@ -53,4 +53,6 @@ COPY ./docker/entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 
+COPY ./docker/assets/02-ros.sh /etc/profile.d/02-ros.sh
+
 CMD ["sleep", "infinity"]

@@ -29,4 +29,4 @@ for i in "${IFACES[@]}"; do
 done
 source /workspace/install/setup.bash
 
-exec "$@"
+exec -- "$@"
